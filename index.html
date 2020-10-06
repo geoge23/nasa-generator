@@ -1,0 +1,188 @@
+<!-- 
+  _/_/_/                                                   
+ _/          _/_/      _/_/    _/  _/_/    _/_/_/    _/_/    
+ _/  _/_/  _/_/_/_/  _/    _/  _/_/      _/    _/  _/_/_/_/   
+ _/    _/  _/        _/    _/  _/        _/    _/  _/          
+ _/_/_/    _/_/_/    _/_/    _/          _/_/_/    _/_/_/     
+                                             _/                
+                                         _/_/                    
+        Copyright (c) 2020 George Parks   
+        All rights reserved
+        Assets on this page are owned by and
+        managed by their respective owners                          
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300italic,regular,italic,500,500italic,700,700italic" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/nasa.png" type="image/x-icon">
+    <title>NASA Generator</title>
+</head>
+<body>
+    <main>
+        <div class="heading">
+            <img src="assets/nasa.png" alt="">
+            <h1>NASA Buzzword Generator</h1>
+        </div>
+        <p>A NASA engineer created a buzzword generator in 1966 that uses a random 3-digit number to create a meaningless but fancy-sounding name to impress politicians and other non-science professionals`. See it <a href="https://i.redd.it/ls03uczx0dr51.png">here</a></p>
+        <div class="generator">
+            <div class="slot" id="1">Press</div>
+            <div class="slot" id="2">to</div>
+            <div class="slot" id="3">generate</div>
+        </div>
+        <br>
+        <button id="generate">Generate!</button>
+    </main>
+</body>
+<script>
+    const s1 = ['integrated', 'total', 'systematized', 'parallel', 'functional', 'responsive', 'optimal', 'synchronized', 'compatible', 'balanced']
+    const s2 = ['management', 'organizational', 'monitored', 'reciprocal', 'digital', 'logistical', 'transitional', 'incremental', 'third-generation', 'policy']
+    const s3 = ['options', 'flexibility', 'capability', 'mobility', 'programming', 'concept', 'time-phase', 'projection', 'hardware', 'contingency']
+    const d1 = document.getElementById('1')
+    const d2 = document.getElementById('2')
+    const d3 = document.getElementById('3')
+    const button = document.getElementById('generate')
+    const interval = 300;
+
+    let running = false;
+
+    button.addEventListener('click', () => {
+        if (running) return;
+        running = true;
+        nest(d1, s1, () => {nest(d2, s2, () => {nest(d3, s3)})})
+        
+    })
+
+    function randomGen(max) {
+        return Math.floor((Math.random() * max));
+    }
+
+    function nest(row, s, next = () => {running = false;}) {
+        setTimeout(() => {
+            row.innerHTML = s[randomGen(s.length)]
+            setTimeout(() => {
+                row.innerHTML = s[randomGen(s.length)]
+                setTimeout(() => {
+                    row.innerHTML = s[randomGen(s.length)]
+                    next()
+                }, interval);
+            }, interval - 100);
+        }, interval - 150)
+    }
+
+</script>
+<style>
+    :root {
+        font-family: 'Ubuntu', sans-serif;
+        color: white;
+    }
+
+    a {
+        color: cadetblue;
+    }
+
+    a:visited {
+        color: darkcyan;
+    }
+
+    .slot {
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40%;
+        width: 23%;
+        margin-left: 3vw;
+    }
+
+    .slot:first-of-type {
+        margin-left: 0;
+    }
+
+    button {
+        width: 20%;
+        height: 3vh;
+        align-self: center;
+        margin-top: 1vh;
+    }
+
+    .generator {
+        width: 80%;
+        height: 20vh;
+        display: flex;
+        align-self: center;
+        flex-direction: row;
+        background-color: rgba(0, 0, 0, 0.502);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .heading {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    p {
+        font-size: 2.5vh;
+    }
+
+    .heading>img {
+        height: 12vh;
+        margin: -30px;
+    }
+
+    main {
+        width: 60vw;
+        height: 45vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    body {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #424242;
+    }
+
+    @media (max-width: 705px) {
+        .heading {
+            flex-direction: column;
+        }
+
+        main {
+            width: 95vw;
+            height: auto;
+        }
+
+        .generator {
+            flex-direction: column;
+        }
+
+        .slot:first-of-type {
+            margin-top: 2vh;
+        }
+
+        .slot {
+            margin: 0;
+            margin-bottom: 2vh;
+            height: 50%;
+            width: 80%;
+        }
+        
+        button {
+            width: 45%;
+        }
+    }
+</style>
+</html>
